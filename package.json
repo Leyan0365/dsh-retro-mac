@@ -3,6 +3,21 @@
   "version": "0.1.0",
   "description": "Retro Macintosh — a classic Mac OS 8/9 Platinum skin for the DeepSeek Harness Web GUI: platinum greys, Chicago/Geneva/Monaco fonts, pinstripe wallpaper, beveled controls, hard shadows. 复古麦金塔皮肤：铂金灰界面、Chicago 字体、条纹壁纸、浮雕控件。",
   "license": "MIT",
+  "author": {
+    "name": "Leyan0365",
+    "url": "https://github.com/Leyan0365"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Leyan0365/dsh-retro-mac.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Leyan0365/dsh-retro-mac/issues"
+  },
+  "homepage": "https://github.com/Leyan0365/dsh-retro-mac#readme",
+  "engines": {
+    "node": ">=18"
+  },
   "type": "module",
   "main": "lib/index.js",
   "exports": {
@@ -18,7 +33,8 @@
     "README.zh.md",
     "CHANGELOG.md",
     "LICENSE"
-  ],  "keywords": [
+  ],
+  "keywords": [
     "deepseek-harness",
     "dsh",
     "plugin",
