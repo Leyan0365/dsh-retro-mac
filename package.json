@@ -18,8 +18,7 @@
     "README.zh.md",
     "CHANGELOG.md",
     "LICENSE"
-  ],
-  "keywords": [
+  ],  "keywords": [
     "deepseek-harness",
     "dsh",
     "plugin",

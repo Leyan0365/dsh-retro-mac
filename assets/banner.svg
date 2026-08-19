@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640">
+  <defs>
+    <pattern id="pinstripe" width="8" height="8" patternUnits="userSpaceOnUse">
+      <rect width="4" height="8" fill="#9FB4D8"/>
+      <rect x="4" width="4" height="8" fill="#B7C8E6"/>
+    </pattern>
+    <linearGradient id="titlebar" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#EEEEEE"/>
+      <stop offset="1" stop-color="#D6D6D6"/>
+    </linearGradient>
+    <filter id="hardshadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="4" dy="4" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <!-- desktop -->
+  <rect width="1280" height="640" fill="url(#pinstripe)"/>
+
+  <!-- main window -->
+  <g filter="url(#hardshadow)">
+    <rect x="180" y="60" width="920" height="520" fill="#D6D6D6" stroke="#000000" stroke-width="2"/>
+    <!-- title bar -->
+    <rect x="180" y="60" width="920" height="40" fill="url(#titlebar)" stroke="#000000" stroke-width="2"/>
+    <rect x="198" y="72" width="16" height="16" fill="#FFFFFF" stroke="#000000" stroke-width="1.5"/>
+    <rect x="1066" y="68" width="20" height="20" fill="#FFFFFF" stroke="#000000" stroke-width="1.5"/>
+    <line x1="1070" y1="80" x2="1082" y2="80" stroke="#000000" stroke-width="2"/>
+    <!-- title text -->
+    <text x="240" y="88" font-family="Geneva, Arial, sans-serif" font-size="24" font-weight="bold" fill="#000000">dsh-retro-mac</text>
+  </g>
+
+  <!-- heading -->
+  <text x="640" y="140" text-anchor="middle" font-family="Geneva, Arial, sans-serif" font-size="40" font-weight="bold" fill="#000000">Retro Macintosh</text>
+  <text x="640" y="190" text-anchor="middle" font-family="Geneva, Arial, sans-serif" font-size="24" fill="#000000">for DeepSeek Harness</text>
+
+  <!-- accent line -->
+  <rect x="540" y="210" width="200" height="4" fill="#1E56C6"/>
+
+  <!-- feature pills -->
+  <g font-family="Geneva, Arial, sans-serif" font-size="20" fill="#000000">
+    <rect x="320" y="250" width="240" height="44" rx="4" fill="#E8E8E8" stroke="#000000" stroke-width="1.5"/>
+    <text x="440" y="279" text-anchor="middle">4 Themes</text>
+
+    <rect x="580" y="250" width="240" height="44" rx="4" fill="#E8E8E8" stroke="#000000" stroke-width="1.5"/>
+    <text x="700" y="279" text-anchor="middle">103 Tokens</text>
+
+    <rect x="840" y="250" width="240" height="44" rx="4" fill="#E8E8E8" stroke="#000000" stroke-width="1.5"/>
+    <text x="960" y="279" text-anchor="middle">47KB Self-contained</text>
+
+    <rect x="320" y="310" width="240" height="44" rx="4" fill="#E8E8E8" stroke="#000000" stroke-width="1.5"/>
+    <text x="440" y="339" text-anchor="middle">Chicago Font</text>
+
+    <rect x="580" y="310" width="240" height="44" rx="4" fill="#E8E8E8" stroke="#000000" stroke-width="1.5"/>
+    <text x="700" y="339" text-anchor="middle">Pinstripe Wallpaper</text>
+
+    <rect x="840" y="310" width="240" height="44" rx="4" fill="#E8E8E8" stroke="#000000" stroke-width="1.5"/>
+    <text x="960" y="339" text-anchor="middle">Happy Mac Easter Egg</text>
+  </g>
+
+  <!-- install command -->
+  <g>
+    <rect x="260" y="400" width="760" height="64" rx="4" fill="#222222" stroke="#000000" stroke-width="2"/>
+    <text x="290" y="440" font-family="Monaco, Menlo, monospace" font-size="26" fill="#7CFC00">dsh plugin --profile web add dsh-retro-mac</text>
+  </g>
+
+  <!-- slogan -->
+  <text x="640" y="520" text-anchor="middle" font-family="Geneva, Arial, sans-serif" font-size="30" font-style="italic" fill="#000000">Work like it's 1997.</text>
+
+  <!-- footer -->
+  <text x="640" y="580" text-anchor="middle" font-family="Geneva, Arial, sans-serif" font-size="18" fill="#000000">github.com/Leyan0365/dsh-retro-mac · MIT · Open Source</text>
+</svg>
