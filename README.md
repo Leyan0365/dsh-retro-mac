@@ -1,0 +1,75 @@
+<h3 align="center">
+	<img src="https://raw.githubusercontent.com/zhijun-dai/dsh-retro-mac/main/assets/preview.svg" width="720" alt="Preview"/><br/>
+	Retro Macintosh for <a href="https://github.com/deepseek-ai/deepseek-harness">DeepSeek Harness</a>
+</h3>
+
+<p align="center">
+	<a href="https://github.com/zhijun-dai/dsh-retro-mac/stargazers"><img src="https://img.shields.io/github/stars/zhijun-dai/dsh-retro-mac?style=for-the-badge&colorA=363a4f&colorB=b7bdf8"></a>
+	<a href="https://github.com/zhijun-dai/dsh-retro-mac/issues"><img src="https://img.shields.io/github/issues/zhijun-dai/dsh-retro-mac?style=for-the-badge&colorA=363a4f&colorB=f5a97f"></a>
+	<a href="https://github.com/zhijun-dai/dsh-retro-mac/blob/main/LICENSE"><img src="https://img.shields.io/github/license/zhijun-dai/dsh-retro-mac?style=for-the-badge&colorA=363a4f&colorB=a6da95"></a>
+</p>
+
+<p align="center">
+	English | <a href="README.zh.md">中文</a>
+</p>
+
+A classic **Mac OS 8/9 Platinum** skin for the DeepSeek Harness Web GUI — a trip back to 1997: platinum greys, Chicago/Geneva/Monaco type, pinstripe wallpaper, beveled controls and hard shadows.
+
+## Features
+
+- **Two skins, four themes** — `Platinum` (light) and `Graphite` (dark), each paired with either **Classic Blue** or **System Teal** highlights — an homage to the Appearance Manager's customizable accent palette.
+- **Full token coverage** — every one of the 103 design tokens the web shell consumes is remapped; no modern DeepSeek blue-grey leaks through.
+- **Chicago web font, zero external assets** — the free ChicagoFLF clone is inlined as a base64 `@font-face`, so the plugin ships as one self-contained file. Geneva and Monaco come from the OS (with graceful fallbacks).
+- **Pinstripe desktop** — the iconic System 7 / Mac OS 8 wallpaper is generated in pure CSS (`repeating-linear-gradient`), no image downloads, no licensing issues.
+- **Beveled Platinum controls** — buttons with the classic 2px inset highlight/shadow bevel, double-rule default buttons, sunken inputs, square scrollbars with black arrow glyphs, menus with hard `2px 2px 0` drop shadows and near-zero border radius.
+- **Barber-pole progress** — indeterminate progress indicators render as the classic striped marquee.
+- **Happy Mac easter egg** — an optional startup splash (SVG, inlined, off by default) with a toggle in the settings row.
+- **Your choice is remembered** — skin, accent and splash persist per browser in `localStorage` and are re-applied on startup.
+- **Zero intrusion on Default** — switching back to the built-in appearance restores it pixel-identical; no injected styles remain.
+- **Accessible** — respects `prefers-reduced-motion`; all micro-interactions disabled for users who ask for reduced motion.
+
+## Requirements
+
+- DeepSeek Harness web profile (`dsh web` / `dsh --profile web`)
+- A browser with ES module + CSS custom property support (any modern browser)
+
+## Installation
+
+The plugin is a file-based bundle plugin — add it as a profile dependency, exactly like any other DSH plugin package:
+
+```bash
+# from your harness checkout (the npm exec wrapper that boots `dsh`)
+dsh plugin --profile web add dsh-retro-mac
+```
+
+Or add the package by hand in the profile's `package.json`:
+
+```json
+{
+  "dependencies": {
+    "dsh-retro-mac": "^0.1.0"
+  }
+}
+```
+
+Then restart the web profile and refresh the page. A **Retro Mac** settings row appears (Settings → Models or the theme picker) with:
+
+- **Skin**: `System` (built-in), `Platinum`, `Graphite`
+- **Accent**: `Classic Blue`, `System Teal`
+- **Splash**: Happy Mac startup screen toggle
+
+## Development
+
+```bash
+# rebuild lib/client.js from src + themes (zero-dependency, plain Node)
+npm run build
+
+# syntax-check the generated bundles
+npm run check
+```
+
+The build validates that every generated theme covers the full 103-key baseline and inlines the Chicago font, so a stale or partial theme fails loudly.
+
+## License
+
+[MIT](LICENSE) © dsh-retro-mac contributors

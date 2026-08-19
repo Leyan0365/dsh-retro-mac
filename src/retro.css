@@ -1,0 +1,941 @@
+/* ════════════════════════════════════════════════════════════════
+   DeepSeek Harness — Retro Macintosh "Platinum" design system
+   Mac OS 8/9 Platinum Appearance · 1998 Power Macintosh grammar
+   Six-level greyscale: face / highlight / mid / shadow / dark / black
+   Hard 1–2px bevels only. No blur, no glass, no gradients-as-effect,
+   no translucency. Blue = system selection / highlight / focus ONLY.
+   Grid: 1/2/4/8/16px. Retina: integer 2× mapping.
+   ════════════════════════════════════════════════════════════════ */
+
+/* ——— Chicago system font (inlined as base64 data URI) ——— */
+@font-face {
+  font-family: 'Chicago';
+  src: url(__CHICAGO_FONT_URI__) format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* ——— Platinum tokens ——— */
+body[data-dsh-retro-mac] {
+  --pt-face: #e8e8e8;
+  --pt-highlight: #ffffff;
+  --pt-mid: #c0c0c0;
+  --pt-shadow: #808080;
+  --pt-dark: #404040;
+  --pt-black: #000000;
+  --pt-bevel-hi: #ffffff;
+  --pt-bevel-hi2: rgba(255, 255, 255, 0.45);
+  font-family: 'Geneva', 'Chicago', 'PingFang SC', 'Hiragino Sans GB', system-ui, sans-serif;
+}
+
+/* Kill every modern blur / glass / translucent effect. */
+body[data-dsh-retro-mac] *::after,
+body[data-dsh-retro-mac] *::before::after,
+body[data-dsh-retro-mac] *::after {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  text-shadow: none !important;
+}
+
+/* Type system: Chicago chrome · PingFang body · Monaco data. */
+body[data-dsh-retro-mac] [class*='sidebarCol'],
+body[data-dsh-retro-mac] [role='menu'],
+body[data-dsh-retro-mac] [role='tab'],
+body[data-dsh-retro-mac] button,
+body[data-dsh-retro-mac] [class*='wSkVaW_header'],
+body[data-dsh-retro-mac] [class*='wSkVaW_tab'],
+body[data-dsh-retro-mac] [class*='crumb'],
+body[data-dsh-retro-mac] h1,
+body[data-dsh-retro-mac] h2,
+body[data-dsh-retro-mac] h3 {
+  font-family: 'Chicago', 'Geneva', 'PingFang SC', 'Hiragino Sans GB', sans-serif;
+}
+body[data-dsh-retro-mac] code,
+body[data-dsh-retro-mac] pre,
+body[data-dsh-retro-mac] .md-code-block,
+body[data-dsh-retro-mac] [class*='o3BgMG_fileLink'],
+body[data-dsh-retro-mac] [class*='FJxK0a_root'] {
+  font-family: 'Monaco', 'SF Mono', Menlo, Consolas, monospace;
+}
+
+/* Links: black, underlined — blue never decorates links. */
+body[data-dsh-retro-mac] a { color: var(--pt-black); text-decoration: underline; }
+body[data-dsh-retro-mac] a:hover { color: var(--pt-black); }
+
+/* System selection: the ONLY blue in the interface. */
+body[data-dsh-retro-mac] ::selection { background: var(--dsw-alias-brand-primary); color: #fff; }
+
+/* ——— Desktop: pinstripe wallpaper behind the translucent canvas ——— */
+.dsh-retro-wallpaper {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color: #d8dee8;
+  background-image:
+    repeating-linear-gradient(90deg, rgba(120, 140, 170, 0.28) 0px, rgba(120, 140, 170, 0.28) 2px, rgba(120, 140, 170, 0.08) 2px, rgba(120, 140, 170, 0.08) 5px),
+    linear-gradient(180deg, #e6eaf0 0%, #d4dae4 100%);
+}
+body[data-dsh-retro-mac][data-ds-dark-theme] .dsh-retro-wallpaper {
+  background-color: #2e3238;
+  background-image:
+    repeating-linear-gradient(90deg, rgba(160, 180, 210, 0.16) 0px, rgba(160, 180, 210, 0.16) 2px, rgba(160, 180, 210, 0.04) 2px, rgba(160, 180, 210, 0.04) 5px),
+    linear-gradient(180deg, #3a3e46 0%, #262a30 100%);
+}
+
+/* ——— Striped Platinum title bar ———
+   Dense horizontal stripes, interrupted by the centred title plate.
+   Decorative close box (left) + zoom box (right); header padding
+   keeps real controls clear of them. */
+body[data-dsh-retro-mac] header {
+  position: relative;
+  background-color: var(--pt-face);
+  background-image: repeating-linear-gradient(180deg, rgba(0, 0, 0, 0.07) 0px, rgba(0, 0, 0, 0.07) 1px, transparent 1px, transparent 3px);
+  border-bottom: 1px solid #000;
+  padding-left: 28px;
+  padding-right: 28px;
+}
+/* Title plate interrupts the stripes; micro six-color brand stripe. */
+body[data-dsh-retro-mac] [class*='titleCluster'],
+body[data-dsh-retro-mac] [class*='crumb'] {
+  background: var(--pt-face);
+  text-align: center;
+}
+body[data-dsh-retro-mac] [class*='titleCluster']::after {
+  content: '';
+  display: block;
+  width: 96px;
+  height: 2px;
+  margin: 2px auto 0;
+  background: linear-gradient(90deg, #61BB46 0 16.66%, #FDB827 0 33.33%, #F5821F 0 50%, #E03A3E 0 66.66%, #963D97 0 83.33%, #009DDC 0 100%);
+}
+/* Hide the host's header sidebar-toggle: reads as a dead control. */
+body[data-dsh-retro-mac] header button[aria-label*='侧边栏'],
+body[data-dsh-retro-mac] header button[aria-label*='sidebar'] {
+  display: none;
+}
+/* Header controls stay flat so icons and the title read cleanly. */
+body[data-dsh-retro-mac] header button,
+body[data-dsh-retro-mac] [class*='wSkVaW_header'] button {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  border-radius: 3px;
+}
+body[data-dsh-retro-mac] header button:hover,
+body[data-dsh-retro-mac] [class*='wSkVaW_header'] button:hover {
+  background: var(--dsw-alias-interactive-bg-hover);
+  box-shadow: inset 1px 1px 0 var(--pt-bevel-hi), inset -1px -1px 0 var(--pt-shadow);
+}
+
+/* ——— Raised tabs (对话 / 轨迹): no modern underline; the active
+   tab merges with the content pane below. ——— */
+body[data-dsh-retro-mac] [class*='wSkVaW_tabs'],
+body[data-dsh-retro-mac] [role='tablist'] {
+  border-bottom: 1px solid #000;
+  background: transparent;
+  gap: 2px;
+}
+body[data-dsh-retro-mac] [class*='wSkVaW_tab'],
+body[data-dsh-retro-mac] [role='tab'] {
+  border-radius: 4px 4px 0 0;
+  border: 1px solid #000;
+  border-bottom: none;
+  background: var(--pt-mid);
+  box-shadow: inset 1px 1px 0 var(--pt-bevel-hi), inset -1px -1px 0 var(--pt-shadow);
+  margin-bottom: -1px;
+  margin-right: 2px;
+  padding: 2px 12px;
+  color: var(--pt-dark);
+}
+/* Blue stays reserved for system highlight: grey out host badges. */
+body[data-dsh-retro-mac] [class*='badge'],
+body[data-dsh-retro-mac] [class*='Badge'] {
+  background: var(--pt-mid) !important;
+  color: #000 !important;
+  filter: none !important;
+}
+body[data-dsh-retro-mac] [class*='wSkVaW_tab']::after::after,
+body[data-dsh-retro-mac] [role='tab']::after {
+  display: none !important;
+}
+body[data-dsh-retro-mac] [class*='wSkVaW_tabActive'],
+body[data-dsh-retro-mac] [role='tab'][aria-selected='true'] {
+  background: var(--dsw-alias-bg-layer-1);
+  border-color: #000;
+  box-shadow: inset 1px 1px 0 var(--pt-bevel-hi);
+  color: var(--pt-black);
+  position: relative;
+  z-index: 1;
+}
+
+/* ——— Desktop-app structure: Platinum grey work area +
+   recessed white conversation pane. ——— */
+body[data-dsh-retro-mac] [class*='wSkVaW_viewArea'] {
+  background: var(--pt-face);
+}
+body[data-dsh-retro-mac] [class*='Md3f7G_scroll'] {
+  background: var(--pt-highlight);
+  border: 1px solid #000;
+  box-shadow: inset 1px 1px 0 var(--pt-shadow), inset 2px 2px 0 rgba(0, 0, 0, 0.12);
+  margin: 8px;
+  border-radius: 0;
+}
+body[data-dsh-retro-mac] [class*='Md3f7G_column'] {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 16px 8px;
+}
+@media (min-width: 1800px) {
+  body[data-dsh-retro-mac] [class*='Md3f7G_column'] { max-width: 1120px; }
+}
+/* Code / tools / logs may use the full pane width. */
+body[data-dsh-retro-mac] [class*='Md3f7G_column'] .md-code-block,
+body[data-dsh-retro-mac] [class*='Md3f7G_column'] [data-tool],
+body[data-dsh-retro-mac] [class*='Md3f7G_column'] [class*='o3BgMG_root'] {
+  max-width: none;
+  width: 100%;
+}
+
+/* ——— Tool rows: Finder / List View, not chips. Left 16px pixel
+   icon · action name · body · hairline divider. ——— */
+body[data-dsh-retro-mac] [class*='o3BgMG_root'],
+body[data-dsh-retro-mac] [data-tool],
+body[data-dsh-retro-mac] [data-variant='think'] {
+  border: none;
+  border-bottom: 1px solid var(--pt-mid);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 4px 8px;
+}
+body[data-dsh-retro-mac] [data-tool] [class*='o3BgMG_row'],
+body[data-dsh-retro-mac] [class*='o3BgMG_root'] [class*='o3BgMG_row'] {
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+}
+/* Real execution actions (read/edit/bash/write) one weight up. */
+body[data-dsh-retro-mac] [data-tool] {
+  color: var(--pt-black);
+}
+/* Think: lighter grey, lower contrast. */
+body[data-dsh-retro-mac] [data-variant='think'],
+body[data-dsh-retro-mac] [class*='QWLzlG_root'] {
+  color: var(--pt-shadow);
+}
+body[data-dsh-retro-mac] [data-variant='think'] svg,
+body[data-dsh-retro-mac] [class*='QWLzlG_root'] svg {
+  opacity: 0.55;
+}
+/* File paths: light recessed highlight, never a box-in-box. */
+body[data-dsh-retro-mac] [class*='o3BgMG_fileLink'] {
+  border: none;
+  border-radius: 0;
+  background: var(--pt-highlight);
+  box-shadow: inset 1px 1px 0 var(--pt-mid);
+  padding: 0 4px;
+  font-size: 11px;
+}
+/* Errors: pixel Stop icon + grey body, red only on the label. */
+body[data-dsh-retro-mac] [data-state='error'],
+body[data-dsh-retro-mac] [data-state='error'] span,
+body[data-dsh-retro-mac] [data-state='error'] div,
+body[data-dsh-retro-mac] [data-state='error'] p {
+  color: var(--pt-dark);
+}
+body[data-dsh-retro-mac] [data-state='error'] [class*='leading'] svg {
+  display: none;
+}
+body[data-dsh-retro-mac] [data-state='error'] [class*='leading'] {
+  width: 16px;
+  height: 16px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Crect x='3' y='3' width='10' height='10' fill='%23E03A3E' stroke='%23000'/%3E%3Crect x='5' y='7' width='6' height='2' fill='%23fff'/%3E%3C/svg%3E") center / 16px 16px no-repeat;
+}
+body[data-dsh-retro-mac] [data-state='error'] [class*='leading'] + * {
+  color: var(--dsw-alias-state-error-primary);
+}
+
+/* ——— Bubbles: flat dialog-grey with hard shadow ——— */
+body[data-dsh-retro-mac] [data-chat-flow-kind='user'] [class*='bubble'],
+body[data-dsh-retro-mac] [data-chat-flow-kind='steering'] [class*='bubble'] {
+  border-radius: 2px;
+  border: 1px solid rgba(0, 0, 0, 0.45);
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* ——— Code blocks: recessed monochrome well ——— */
+body[data-dsh-retro-mac] .md-code-block {
+  border-radius: 0;
+  border: 1px solid rgba(0, 0, 0, 0.35);
+  box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.5), inset -1px -1px 0 rgba(0, 0, 0, 0.12);
+}
+
+/* ——— Push buttons: classic Mac bevel; default ring only for the
+   primary send action. ——— */
+body[data-dsh-retro-mac] button {
+  border-radius: 4px;
+  border: 1px solid #000;
+  color: var(--dsw-alias-label-primary);
+  background: var(--dsw-alias-button-elevated-fill);
+  box-shadow:
+    inset 1px 1px 0 var(--pt-bevel-hi),
+    inset -1px -1px 0 var(--pt-shadow);
+}
+body[data-dsh-retro-mac] button:active {
+  transform: translate(1px, 1px);
+  box-shadow: inset 1px 1px 0 var(--pt-shadow), inset -1px -1px 0 #fff;
+}
+body[data-dsh-retro-mac] button[class*='primary'],
+body[data-dsh-retro-mac] button[class*='send'] {
+  box-shadow:
+    0 0 0 1px #000,
+    0 0 0 3px #fff,
+    0 0 0 4px #000,
+    inset 1px 1px 0 var(--pt-bevel-hi),
+    inset -1px -1px 0 var(--pt-shadow);
+}
+
+/* ——— Inputs / selectors: recessed fields ——— */
+body[data-dsh-retro-mac] input,
+body[data-dsh-retro-mac] textarea,
+body[data-dsh-retro-mac] select {
+  border-radius: 2px;
+  border: 1px solid #000;
+  background: var(--dsw-specific-input-major);
+  color: var(--dsw-alias-label-primary);
+  box-shadow: inset 1px 1px 0 var(--pt-shadow), inset -1px -1px 0 #fff;
+}
+
+/* ——— Composer: raised Platinum card; inner input recessed. ——— */
+body[data-dsh-retro-mac] [data-composer-card],
+body[data-dsh-retro-mac] [class*='uV2eYG_card'] {
+  border-radius: 4px;
+  border: 1px solid #000;
+  background: var(--pt-face);
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.25), inset 1px 1px 0 var(--pt-bevel-hi), inset -1px -1px 0 var(--pt-shadow);
+}
+body[data-dsh-retro-mac] [class*='uV2eYG_input'] {
+  border: none;
+  box-shadow: none;
+  background: transparent;
+}
+/* Model / access selectors: small raised controls, not pills. */
+body[data-dsh-retro-mac] [class*='_7KE1Ra_root'],
+body[data-dsh-retro-mac] [class*='Md3f7G_turnStatusClock'] {
+  border: 1px solid #000;
+  border-radius: 3px;
+  background: var(--pt-face);
+  box-shadow: inset 1px 1px 0 var(--pt-bevel-hi), inset -1px -1px 0 var(--pt-shadow);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ——— Pixel icons (zh): scoped to icon-only buttons so text
+   buttons (brand plate, New Session, Settings) keep their layout. ——— */
+body[data-dsh-retro-mac] [class*='sectionHeader'] button[aria-label='搜索会话'] svg,
+body[data-dsh-retro-mac] [class*='sectionHeader'] button[aria-label='视图选项'] svg,
+body[data-dsh-retro-mac] [class*='sectionHeader'] button[aria-label='添加工作区'] svg,
+body[data-dsh-retro-mac] [class*='uV2eYG_tools'] button[aria-label='命令'] svg,
+body[data-dsh-retro-mac] [class*='uV2eYG_row'] button[aria-label*='发送'] svg,
+body[data-dsh-retro-mac] [class*='qDHVXG_rail'] button[aria-label='新建会话'] svg {
+  display: none !important;
+}
+body[data-dsh-retro-mac] [class*='sectionHeader'] button[aria-label='搜索会话'] {
+  position: relative;
+}
+body[data-dsh-retro-mac] [class*='sectionHeader'] button[aria-label='搜索会话']::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: var(--pt-black);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M4 2h5v1h1v1h1v5h-1v1h-1v1H4v-1H3v-1H2V4h1V3h1V2z' fill='none' stroke='%23000'/%3E%3Cpath d='M10 10h2v1h1v1h1v2h-2v-1h-1v-1h-1v-2z' fill='%23000'/%3E%3C/svg%3E") center / 14px 14px no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M4 2h5v1h1v1h1v5h-1v1h-1v1H4v-1H3v-1H2V4h1V3h1V2z' fill='none' stroke='%23000'/%3E%3Cpath d='M10 10h2v1h1v1h1v2h-2v-1h-1v-1h-1v-2z' fill='%23000'/%3E%3C/svg%3E") center / 14px 14px no-repeat;
+}
+body[data-dsh-retro-mac] [class*='sectionHeader'] button[aria-label='添加工作区'],
+body[data-dsh-retro-mac] [class*='uV2eYG_tools'] button[aria-label='命令'],
+body[data-dsh-retro-mac] [class*='qDHVXG_rail'] button[aria-label='新建会话'] {
+  position: relative;
+}
+body[data-dsh-retro-mac] [class*='sectionHeader'] button[aria-label='添加工作区']::after,
+body[data-dsh-retro-mac] [class*='uV2eYG_tools'] button[aria-label='命令']::after,
+body[data-dsh-retro-mac] [class*='qDHVXG_rail'] button[aria-label='新建会话']::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: var(--pt-black);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M7 3h2v4h4v2H9v4H7V9H3V7h4V3z' fill='%23000'/%3E%3C/svg%3E") center / 14px 14px no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M7 3h2v4h4v2H9v4H7V9H3V7h4V3z' fill='%23000'/%3E%3C/svg%3E") center / 14px 14px no-repeat;
+}
+body[data-dsh-retro-mac] [class*='sectionHeader'] button[aria-label='视图选项'] {
+  position: relative;
+}
+body[data-dsh-retro-mac] [class*='sectionHeader'] button[aria-label='视图选项']::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: var(--pt-black);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M2 4h12v1H2zM2 8h12v1H2zM2 12h12v1H2z' fill='%23000'/%3E%3Crect x='4' y='3' width='2' height='3' fill='%23000'/%3E%3Crect x='9' y='7' width='2' height='3' fill='%23000'/%3E%3Crect x='6' y='11' width='2' height='3' fill='%23000'/%3E%3C/svg%3E") center / 14px 14px no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M2 4h12v1H2zM2 8h12v1H2zM2 12h12v1H2z' fill='%23000'/%3E%3Crect x='4' y='3' width='2' height='3' fill='%23000'/%3E%3Crect x='9' y='7' width='2' height='3' fill='%23000'/%3E%3Crect x='6' y='11' width='2' height='3' fill='%23000'/%3E%3C/svg%3E") center / 14px 14px no-repeat;
+}
+body[data-dsh-retro-mac] [class*='uV2eYG_row'] button[aria-label*='发送'] {
+  position: relative;
+}
+body[data-dsh-retro-mac] [class*='uV2eYG_row'] button[aria-label*='发送']::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: var(--pt-black);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M8 2L12 7H10V14H6V7H4Z' fill='%23000'/%3E%3C/svg%3E") center / 14px 14px no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M8 2L12 7H10V14H6V7H4Z' fill='%23000'/%3E%3C/svg%3E") center / 14px 14px no-repeat;
+}
+/* ——— Search wrapper: the collapsed host container is a 50% circle
+   with overflow hidden — it clips the retro square into a disc. ——— */
+body[data-dsh-retro-mac] .qDHVXG_search,
+body[data-dsh-retro-mac] .qDHVXG_rail .qDHVXG_search {
+  border-radius: 4px !important;
+  overflow: visible !important;
+}
+body[data-dsh-retro-mac] .qDHVXG_searchButton,
+body[data-dsh-retro-mac] .qDHVXG_searchButton:hover,
+body[data-dsh-retro-mac] .qDHVXG_searchButton:focus,
+body[data-dsh-retro-mac] .qDHVXG_searchButton:focus-visible,
+body[data-dsh-retro-mac] .qDHVXG_rail .qDHVXG_searchButton {
+  border-radius: 4px !important;
+  background-color: var(--dsw-alias-button-elevated-fill) !important;
+  border: 1px solid #000 !important;
+  box-shadow: inset 1px 1px 0 var(--pt-bevel-hi), inset -1px -1px 0 var(--pt-shadow) !important;
+}
+
+/* ——— Sidebar: solid platinum window with a black hairline ——— */
+body[data-dsh-retro-mac] [class*='sidebarCol'] {
+  border-right: 1px solid #000;
+}
+/* Six-color Macintosh stripe under the nameplate, edges aligned. */
+body[data-dsh-retro-mac] [class*='hHd-Xa_logoRow'] {
+  position: relative;
+  padding-bottom: 8px;
+}
+body[data-dsh-retro-mac] [class*='hHd-Xa_logoRow']::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #61BB46 0 16.66%, #FDB827 0 33.33%, #F5821F 0 50%, #E03A3E 0 66.66%, #963D97 0 83.33%, #009DDC 0 100%);
+}
+/* Collapse control hugs the right edge. */
+body[data-dsh-retro-mac] [class*='hHd-Xa_logoRow'] button[aria-label='收起侧边栏'],
+body[data-dsh-retro-mac] [class*='hHd-Xa_logoRow'] button[aria-label*='Collapse'],
+body[data-dsh-retro-mac] [class*='hHd-Xa_logoRow'] button[aria-label*='sidebar'] {
+  margin-left: auto;
+}
+
+/* ——— Empty state: About-card composition — six-color stripe,
+   name, version line, then the handwritten hello. ——— */
+body[data-dsh-retro-mac] [class*='wSkVaW_heroGlow'] {
+  display: none;
+}
+body[data-dsh-retro-mac] [class*='pXSMma_previewBadge'] {
+  display: none;
+}
+body[data-dsh-retro-mac] [class*='pXSMma_root'] {
+  visibility: hidden;
+  display: block !important;
+  text-align: center;
+}
+body[data-dsh-retro-mac] [class*='pXSMma_root']::after {
+  content: 'hello.';
+  visibility: visible;
+  display: inline-block;
+  font-family: 'Snell Roundhand', 'Brush Script MT', cursive;
+  font-size: 56px;
+  color: var(--pt-black);
+  transition: opacity 200ms ease;
+}
+body[data-dsh-retro-mac] [class*='wSkVaW_composerHero'] {
+  position: relative;
+  padding-top: 128px;
+}
+body[data-dsh-retro-mac] [class*='wSkVaW_composerHero']::before {
+  content: 'DeepSeek Harness';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: 'Chicago', 'Geneva', sans-serif;
+  font-size: 18px;
+  color: var(--pt-black);
+  padding-top: 12px;
+  background: linear-gradient(90deg, #61BB46 0 16.66%, #FDB827 0 33.33%, #F5821F 0 50%, #E03A3E 0 66.66%, #963D97 0 83.33%, #009DDC 0 100%) center top / 120px 3px no-repeat;
+  transition: opacity 200ms ease;
+}
+body[data-dsh-retro-mac] [class*='wSkVaW_composerHero']::after {
+  content: 'Version 0.1.0-rc · Platinum Appearance · hello, intelligence.';
+  position: absolute;
+  top: 44px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: 'Geneva', 'PingFang SC', sans-serif;
+  font-size: 12px;
+  color: var(--pt-dark);
+  transition: opacity 200ms ease;
+}
+body[data-dsh-retro-mac]:has([class*='uV2eYG_input']:focus) [class*='wSkVaW_composerHero']::before::after,
+body[data-dsh-retro-mac]:has([class*='uV2eYG_input']:focus) [class*='wSkVaW_composerHero']::after::after,
+body[data-dsh-retro-mac]:has([class*='uV2eYG_input']:focus) [class*='pXSMma_root']::after {
+  opacity: 0;
+}
+/* ——— Menus & dialogs: square, black-bordered, hard shadow ——— */
+body[data-dsh-retro-mac] [role='menu'],
+body[data-dsh-retro-mac] [role='dialog'] {
+  border-radius: 0;
+  border: 1px solid #000;
+  background: var(--dsw-alias-bg-overlay);
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.45);
+}
+body[data-dsh-retro-mac] [role='menuitem'] { border-radius: 0; }
+body[data-dsh-retro-mac] [role='menuitem']:hover,
+body[data-dsh-retro-mac] [role='menuitem']:focus-visible {
+  background: var(--dsw-alias-brand-primary);
+  color: #fff;
+}
+
+/* ——— Classic Macintosh scrollbars + grow box ——— */
+body[data-dsh-retro-mac] ::-webkit-scrollbar {
+  width: 15px;
+  height: 15px;
+}
+body[data-dsh-retro-mac] ::-webkit-scrollbar-track {
+  background: var(--dsw-alias-scrollbar-bg-l1);
+  background-image: repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.08) 0px, rgba(0, 0, 0, 0.08) 1px, transparent 1px, transparent 4px);
+}
+body[data-dsh-retro-mac] ::-webkit-scrollbar-thumb {
+  background: var(--dsw-alias-scrollbar-bg-l2);
+  border: 1px solid #000;
+  border-radius: 0;
+  box-shadow: inset 1px 1px 0 var(--pt-bevel-hi), inset -1px -1px 0 #666;
+}
+body[data-dsh-retro-mac] ::-webkit-scrollbar-button {
+  display: block;
+  background: var(--pt-face);
+  border: 1px solid #000;
+  box-shadow: inset 1px 1px 0 var(--pt-bevel-hi), inset -1px -1px 0 var(--pt-shadow);
+}
+body[data-dsh-retro-mac] ::-webkit-scrollbar-button:vertical:decrement {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M4 1 L7 7 L1 7 Z' fill='%23000'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+body[data-dsh-retro-mac] ::-webkit-scrollbar-button:vertical:increment {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M4 7 L1 1 L7 1 Z' fill='%23000'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+body[data-dsh-retro-mac] ::-webkit-scrollbar-button:horizontal:decrement {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M1 4 L7 1 L7 7 Z' fill='%23000'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+body[data-dsh-retro-mac] ::-webkit-scrollbar-button:horizontal:increment {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M7 4 L1 1 L1 7 Z' fill='%23000'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+body[data-dsh-retro-mac] ::-webkit-scrollbar-corner {
+  background-color: var(--pt-face);
+  background-image: repeating-linear-gradient(45deg, rgba(128, 128, 128, 0.45) 0px, rgba(0, 0, 0, 0.35) 1px, transparent 1px, transparent 4px);
+}
+/* Recessed white input well inside the raised composer card,
+   with a 12px corner grow box. */
+body[data-dsh-retro-mac] [class*='uV2eYG_grow'] {
+  position: relative;
+  background: var(--pt-highlight);
+  border: 1px solid #000;
+  border-radius: 0;
+  box-shadow: inset 1px 1px 0 var(--pt-shadow);
+  margin: 8px;
+}
+body[data-dsh-retro-mac] [class*='uV2eYG_grow']::after {
+  content: '';
+  position: absolute;
+  right: 2px;
+  bottom: 2px;
+  width: 12px;
+  height: 12px;
+  pointer-events: none;
+  background-color: var(--pt-face);
+  background-image: repeating-linear-gradient(45deg, rgba(128, 128, 128, 0.45) 0px, rgba(0, 0, 0, 0.35) 1px, transparent 1px, transparent 4px);
+}
+body[data-dsh-retro-mac] * {
+  scrollbar-width: auto;
+  scrollbar-color: var(--dsw-alias-scrollbar-bg-l2) var(--dsw-alias-scrollbar-bg-l1);
+}
+
+/* ——— Status bar: recessed Finder strip with compact fields ——— */
+body[data-dsh-retro-mac] [class*='FJxK0a_root'] {
+  border-top: 1px solid #000;
+  background: var(--pt-face);
+  color: var(--pt-dark);
+  font-family: 'Monaco', 'SF Mono', Menlo, monospace;
+  font-size: 11px;
+  box-shadow: inset 0 1px 0 #fff, inset 0 2px 0 rgba(0, 0, 0, 0.12);
+}
+body[data-dsh-retro-mac] [class*='FJxK0a_root'] > span {
+  padding: 0 8px;
+  border-right: 1px solid var(--pt-mid);
+}
+body[data-dsh-retro-mac] [class*='FJxK0a_sep'] {
+  display: none;
+}
+
+/* ——— Barber-pole progress (classic striped indicator); modern
+   spinners replaced. ——— */
+body[data-dsh-retro-mac] [role='progressbar'],
+body[data-dsh-retro-mac] progress,
+body[data-dsh-retro-mac] [class*='progress'] {
+  border-radius: 0;
+  border: 1px solid #000;
+  background: var(--pt-highlight);
+  overflow: hidden;
+}
+body[data-dsh-retro-mac] [class*='spin'] svg,
+body[data-dsh-retro-mac] [class*='loading'] svg {
+  display: none !important;
+}
+body[data-dsh-retro-mac] [class*='spin'],
+body[data-dsh-retro-mac] [class*='loading'] {
+  background-image: repeating-linear-gradient(45deg, #000 0px, #000 4px, transparent 4px, transparent 8px);
+  background-size: 12px 12px;
+  animation: dsh-retro-stripes 0.8s linear infinite;
+}
+@media (prefers-reduced-motion: no-preference) {
+  body[data-dsh-retro-mac] [role='progressbar']::-webkit-progress-value,
+  body[data-dsh-retro-mac] progress::-webkit-progress-value,
+  body[data-dsh-retro-mac] [class*='progress'] > [class*='bar'],
+  body[data-dsh-retro-mac] [class*='progress'] > div {
+    background-image: repeating-linear-gradient(45deg, #000 0px, #000 4px, transparent 4px, transparent 8px);
+    background-size: 12px 12px;
+    animation: dsh-retro-stripes 0.8s linear infinite;
+  }
+}
+@keyframes dsh-retro-stripes {
+  to { background-position: 12px 0; }
+}
+
+/* ——— Radius discipline: panels, lists, cards stay square ——— */
+body[data-dsh-retro-mac] [role='treeitem'],
+body[data-dsh-retro-mac] [role='listitem'],
+body[data-dsh-retro-mac] [class*='card'],
+body[data-dsh-retro-mac] [class*='panel'],
+body[data-dsh-retro-mac] [class*='table'],
+body[data-dsh-retro-mac] .md-code-block {
+  border-radius: 0;
+}
+
+/* ——— Micro-interactions (gated on reduced motion) ——— */
+@media (prefers-reduced-motion: no-preference) {
+  body[data-dsh-retro-mac] button {
+    transition: filter 80ms ease;
+  }
+  body[data-dsh-retro-mac] button:hover {
+    filter: brightness(1.04);
+  }
+  body[data-dsh-retro-mac] [role='treeitem'] {
+    transition: background-color 120ms ease;
+  }
+}
+
+/* ——— Happy Mac splash (easter egg, off by default) ——— */
+.dsh-retro-splash {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #808080;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+}
+.dsh-retro-splash.hide {
+  animation: dsh-retro-splash-out 400ms ease forwards;
+}
+@keyframes dsh-retro-splash-out {
+  to { opacity: 0; visibility: hidden; }
+}
+.dsh-retro-splash-bar {
+  width: 280px;
+  height: 13px;
+  border: 1px solid #000;
+  background: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.dsh-retro-splash-bar::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 8%;
+  background: #000;
+  animation: dsh-retro-progress 1.3s steps(10) forwards;
+}
+@keyframes dsh-retro-progress {
+  from { width: 8%; }
+  to { width: 92%; }
+}
+
+/* ════════ Final sweep: clear remaining modern leftovers ════════ */
+
+/* Hero selector chips (workspace / mode): raised Platinum controls. */
+body[data-dsh-retro-mac] [class*='pXSMma_workspace'],
+body[data-dsh-retro-mac] [class*='pXSMma_mode'],
+body[data-dsh-retro-mac] [class*='composerHero'] button {
+  border-radius: 4px;
+  border: 1px solid #000;
+  background: var(--pt-face);
+  box-shadow: inset 1px 1px 0 var(--pt-bevel-hi), inset -1px -1px 0 var(--pt-shadow);
+  color: var(--pt-black);
+  font-family: 'Chicago', 'Geneva', 'PingFang SC', sans-serif;
+}
+/* Blue folder → pixel folder glyph. */
+body[data-dsh-retro-mac] [class*='pXSMma_folder'] {
+  display: none;
+}
+body[data-dsh-retro-mac] [class*='pXSMma_workspace'] {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M1 3h5l2 2h7v8H1V3z' fill='%23000'/%3E%3Cpath d='M2 4h4l2 2h6v6H2V4z' fill='%23e8e8e8'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 8px center;
+  padding-left: 28px;
+}
+/* DeepSeek whale + preset icons: monochrome black, no modern color. */
+body[data-dsh-retro-mac] [class*='composerHero'] svg,
+body[data-dsh-retro-mac] [class*='SVAs4q_label'] svg {
+  filter: grayscale(1) contrast(1.4);
+}
+/* Hero title in Chicago, tight and professional. */
+body[data-dsh-retro-mac] [class*='composerHero'] h1,
+body[data-dsh-retro-mac] [class*='composerHero'] [class*='title'] {
+  font-family: 'Chicago', 'Geneva', 'PingFang SC', sans-serif;
+  color: var(--pt-black);
+}
+/* Preview badge: grey, not blue. */
+body[data-dsh-retro-mac] [class*='preview'],
+body[data-dsh-retro-mac] [class*='Preview'] {
+  background: var(--pt-mid) !important;
+  color: #000 !important;
+}
+/* User bubbles: dialog grey, never blue. */
+body[data-dsh-retro-mac] [data-chat-flow-kind='user'] [class*='bubble'],
+body[data-dsh-retro-mac] [data-chat-flow-kind='steering'] [class*='bubble'] {
+  background: var(--pt-face) !important;
+  color: var(--pt-black);
+}
+/* Message action buttons: square bevels, not rounded pills. */
+body[data-dsh-retro-mac] button[class*='_action'] {
+  border-radius: 2px;
+  border: 1px solid #000;
+  background: var(--pt-face);
+  box-shadow: inset 1px 1px 0 var(--pt-bevel-hi), inset -1px -1px 0 var(--pt-shadow);
+}
+/* Pixel icons: scoped to icon-only buttons in their containers,
+   so text buttons (brand plate, New Session, Settings) keep layout. */
+body[data-dsh-retro-mac] [class*='sectionHeader'] button[aria-label='搜索会话'] svg,
+body[data-dsh-retro-mac] [class*='sectionHeader'] button[aria-label='Search sessions'] svg,
+body[data-dsh-retro-mac] [class*='sectionHeader'] button[aria-label='视图选项'] svg,
+body[data-dsh-retro-mac] [class*='sectionHeader'] button[aria-label='View options'] svg,
+body[data-dsh-retro-mac] [class*='sectionHeader'] button[aria-label='添加工作区'] svg,
+body[data-dsh-retro-mac] [class*='sectionHeader'] button[aria-label='Add workspace'] svg,
+body[data-dsh-retro-mac] [class*='uV2eYG_tools'] button[aria-label='命令'] svg,
+body[data-dsh-retro-mac] [class*='uV2eYG_tools'] button[aria-label='Commands'] svg,
+body[data-dsh-retro-mac] [class*='uV2eYG_row'] button[aria-label*='发送'] svg,
+body[data-dsh-retro-mac] [class*='uV2eYG_row'] button[aria-label='Send message'] svg,
+body[data-dsh-retro-mac] [class*='qDHVXG_rail'] button[aria-label='新建会话'] svg,
+body[data-dsh-retro-mac] [class*='qDHVXG_rail'] button[aria-label='New session'] svg {
+  display: none !important;
+}
+body[data-dsh-retro-mac] [class*='sectionHeader'] button[aria-label='搜索会话'],
+body[data-dsh-retro-mac] [class*='sectionHeader'] button[aria-label='Search sessions'] {
+  position: relative;
+}
+body[data-dsh-retro-mac] [class*='sectionHeader'] button[aria-label='搜索会话']::after,
+body[data-dsh-retro-mac] [class*='sectionHeader'] button[aria-label='Search sessions']::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: var(--pt-black);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M4 2h5v1h1v1h1v5h-1v1h-1v1H4v-1H3v-1H2V4h1V3h1V2z' fill='none' stroke='%23000'/%3E%3Cpath d='M10 10h2v1h1v1h1v2h-2v-1h-1v-1h-1v-2z' fill='%23000'/%3E%3C/svg%3E") center / 14px 14px no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M4 2h5v1h1v1h1v5h-1v1h-1v1H4v-1H3v-1H2V4h1V3h1V2z' fill='none' stroke='%23000'/%3E%3Cpath d='M10 10h2v1h1v1h1v2h-2v-1h-1v-1h-1v-2z' fill='%23000'/%3E%3C/svg%3E") center / 14px 14px no-repeat;
+}
+body[data-dsh-retro-mac] [class*='sectionHeader'] button[aria-label='添加工作区'],
+body[data-dsh-retro-mac] [class*='sectionHeader'] button[aria-label='Add workspace'],
+body[data-dsh-retro-mac] [class*='uV2eYG_tools'] button[aria-label='命令'],
+body[data-dsh-retro-mac] [class*='uV2eYG_tools'] button[aria-label='Commands'],
+body[data-dsh-retro-mac] [class*='qDHVXG_rail'] button[aria-label='新建会话'],
+body[data-dsh-retro-mac] [class*='qDHVXG_rail'] button[aria-label='New session'] {
+  position: relative;
+}
+body[data-dsh-retro-mac] [class*='sectionHeader'] button[aria-label='添加工作区']::after,
+body[data-dsh-retro-mac] [class*='sectionHeader'] button[aria-label='Add workspace']::after,
+body[data-dsh-retro-mac] [class*='uV2eYG_tools'] button[aria-label='命令']::after,
+body[data-dsh-retro-mac] [class*='uV2eYG_tools'] button[aria-label='Commands']::after,
+body[data-dsh-retro-mac] [class*='qDHVXG_rail'] button[aria-label='新建会话']::after,
+body[data-dsh-retro-mac] [class*='qDHVXG_rail'] button[aria-label='New session']::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: var(--pt-black);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M7 3h2v4h4v2H9v4H7V9H3V7h4V3z' fill='%23000'/%3E%3C/svg%3E") center / 14px 14px no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M7 3h2v4h4v2H9v4H7V9H3V7h4V3z' fill='%23000'/%3E%3C/svg%3E") center / 14px 14px no-repeat;
+}
+body[data-dsh-retro-mac] [class*='sectionHeader'] button[aria-label='视图选项'],
+body[data-dsh-retro-mac] [class*='sectionHeader'] button[aria-label='View options'] {
+  position: relative;
+}
+body[data-dsh-retro-mac] [class*='sectionHeader'] button[aria-label='视图选项']::after,
+body[data-dsh-retro-mac] [class*='sectionHeader'] button[aria-label='View options']::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: var(--pt-black);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M2 4h12v1H2zM2 8h12v1H2zM2 12h12v1H2z' fill='%23000'/%3E%3Crect x='4' y='3' width='2' height='3' fill='%23000'/%3E%3Crect x='9' y='7' width='2' height='3' fill='%23000'/%3E%3Crect x='6' y='11' width='2' height='3' fill='%23000'/%3E%3C/svg%3E") center / 14px 14px no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M2 4h12v1H2zM2 8h12v1H2zM2 12h12v1H2z' fill='%23000'/%3E%3Crect x='4' y='3' width='2' height='3' fill='%23000'/%3E%3Crect x='9' y='7' width='2' height='3' fill='%23000'/%3E%3Crect x='6' y='11' width='2' height='3' fill='%23000'/%3E%3C/svg%3E") center / 14px 14px no-repeat;
+}
+body[data-dsh-retro-mac] [class*='uV2eYG_row'] button[aria-label*='发送'],
+body[data-dsh-retro-mac] [class*='uV2eYG_row'] button[aria-label='Send message'] {
+  position: relative;
+}
+body[data-dsh-retro-mac] [class*='uV2eYG_row'] button[aria-label*='发送']::after,
+body[data-dsh-retro-mac] [class*='uV2eYG_row'] button[aria-label='Send message']::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: var(--pt-black);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M8 2L12 7H10V14H6V7H4Z' fill='%23000'/%3E%3C/svg%3E") center / 14px 14px no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M8 2L12 7H10V14H6V7H4Z' fill='%23000'/%3E%3C/svg%3E") center / 14px 14px no-repeat;
+}
+/* Hero heading in Chicago. */
+body[data-dsh-retro-mac] [class*='composerHero'] :is(h1, h2, h3, [class*='heading'], [class*='Heading']) {
+  font-family: 'Chicago', 'Geneva', 'PingFang SC', sans-serif;
+  color: var(--pt-black);
+}
+
+/* ——— Brand plate: no bevel, breathing room. ——— */
+body[data-dsh-retro-mac] [class*='hHd-Xa_brand'],
+body[data-dsh-retro-mac] [class*='hHd-Xa_brand']:hover {
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  border-radius: 0;
+}
+body[data-dsh-retro-mac] [class*='hHd-Xa_logoRow'] {
+  gap: 8px;
+}
+
+/* ——— Collapsed rail: square every wrapper, pixel icons. ——— */
+body[data-dsh-retro-mac] [class*='qDHVXG_rail'],
+body[data-dsh-retro-mac] [class*='qDHVXG_rail'] * {
+  border-radius: 4px !important;
+  overflow: visible !important;
+}
+body[data-dsh-retro-mac] [class*='qDHVXG_rail'] button[aria-label='新建会话'] svg,
+body[data-dsh-retro-mac] [class*='qDHVXG_rail'] button[aria-label='新会话'] svg,
+body[data-dsh-retro-mac] [class*='qDHVXG_rail'] button[aria-label='添加工作区'] svg,
+body[data-dsh-retro-mac] [class*='qDHVXG_rail'] button[aria-label='搜索会话'] svg {
+  display: none !important;
+}
+body[data-dsh-retro-mac] [class*='qDHVXG_rail'] button[aria-label='搜索会话'] {
+  position: relative;
+}
+body[data-dsh-retro-mac] [class*='qDHVXG_rail'] button[aria-label='搜索会话']::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: var(--pt-black);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M4 2h5v1h1v1h1v5h-1v1h-1v1H4v-1H3v-1H2V4h1V3h1V2z' fill='none' stroke='%23000'/%3E%3Cpath d='M10 10h2v1h1v1h1v2h-2v-1h-1v-1h-1v-2z' fill='%23000'/%3E%3C/svg%3E") center / 16px 16px no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M4 2h5v1h1v1h1v5h-1v1h-1v1H4v-1H3v-1H2V4h1V3h1V2z' fill='none' stroke='%23000'/%3E%3Cpath d='M10 10h2v1h1v1h1v2h-2v-1h-1v-1h-1v-2z' fill='%23000'/%3E%3C/svg%3E") center / 16px 16px no-repeat;
+}
+body[data-dsh-retro-mac] [class*='qDHVXG_rail'] button[aria-label='新建会话'],
+body[data-dsh-retro-mac] [class*='qDHVXG_rail'] button[aria-label='新会话'],
+body[data-dsh-retro-mac] [class*='qDHVXG_rail'] button[aria-label='添加工作区'] {
+  position: relative;
+}
+body[data-dsh-retro-mac] [class*='qDHVXG_rail'] button[aria-label='新建会话']::after,
+body[data-dsh-retro-mac] [class*='qDHVXG_rail'] button[aria-label='新会话']::after,
+body[data-dsh-retro-mac] [class*='qDHVXG_rail'] button[aria-label='添加工作区']::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: var(--pt-black);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M7 3h2v4h4v2H9v4H7V9H3V7h4V3z' fill='%23000'/%3E%3C/svg%3E") center / 16px 16px no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M7 3h2v4h4v2H9v4H7V9H3V7h4V3z' fill='%23000'/%3E%3C/svg%3E") center / 16px 16px no-repeat;
+}
+
+/* ——— Send button: theme-color highlight once the input has text. ——— */
+body[data-dsh-retro-mac]:has([class*='uV2eYG_input']:not(:placeholder-shown)) [class*='uV2eYG_row'] button[aria-label*='发送'],
+body[data-dsh-retro-mac]:has([class*='uV2eYG_input']:not(:placeholder-shown)) [class*='uV2eYG_row'] button[aria-label='Send message'] {
+  background-color: var(--dsw-alias-brand-primary) !important;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M8 2L12 7H10V14H6V7H4Z' fill='%23fff'/%3E%3C/svg%3E") !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  box-shadow:
+    0 0 0 1px #000,
+    0 0 0 3px #fff,
+    0 0 0 4px #000,
+    inset 1px 1px 0 rgba(255, 255, 255, 0.5),
+    inset -1px -1px 0 rgba(0, 0, 0, 0.4) !important;
+}
+
+/* ════════ Graphite (dark) appearance: tokens flip, light stays ════════ */
+body[data-dsh-retro-mac][data-ds-dark-theme] {
+  --pt-face: #3a3a3c;
+  --pt-highlight: #232326;
+  --pt-mid: #55555a;
+  --pt-shadow: #17171a;
+  --pt-dark: #c9c9ce;
+  --pt-black: #f2f2f5;
+  --pt-bevel-hi: #66666c;
+  --pt-bevel-hi2: rgba(255, 255, 255, 0.14);
+}
+/* Search magnifier: white glyph on dark bevel. */
+body[data-dsh-retro-mac][data-ds-dark-theme] [class*='qDHVXG_searchButton'],
+body[data-dsh-retro-mac][data-ds-dark-theme] [class*='sectionHeader'] button[aria-label='搜索会话'],
+body[data-dsh-retro-mac][data-ds-dark-theme] [class*='sectionHeader'] button[aria-label='Search sessions'] {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M4 2h5v1h1v1h1v5h-1v1h-1v1H4v-1H3v-1H2V4h1V3h1V2z' fill='none' stroke='%23f2f2f5'/%3E%3Cpath d='M10 10h2v1h1v1h1v2h-2v-1h-1v-1h-1v-2z' fill='%23f2f2f5'/%3E%3C/svg%3E") !important;
+}
+/* Folder chip: light folder on dark. */
+body[data-dsh-retro-mac][data-ds-dark-theme] [class*='pXSMma_workspace'] {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cpath d='M1 3h5l2 2h7v8H1V3z' fill='%23f2f2f5'/%3E%3Cpath d='M2 4h4l2 2h6v6H2V4z' fill='%233a3a3c'/%3E%3C/svg%3E");
+}
+/* Scrollbar arrows: light triangles. */
+body[data-dsh-retro-mac][data-ds-dark-theme] ::-webkit-scrollbar-button:vertical:decrement {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M4 1 L7 7 L1 7 Z' fill='%23f2f2f5'/%3E%3C/svg%3E");
+}
+body[data-dsh-retro-mac][data-ds-dark-theme] ::-webkit-scrollbar-button:vertical:increment {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M4 7 L1 1 L7 1 Z' fill='%23f2f2f5'/%3E%3C/svg%3E");
+}
+body[data-dsh-retro-mac][data-ds-dark-theme] ::-webkit-scrollbar-button:horizontal:decrement {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M1 4 L7 1 L7 7 Z' fill='%23f2f2f5'/%3E%3C/svg%3E");
+}
+body[data-dsh-retro-mac][data-ds-dark-theme] ::-webkit-scrollbar-button:horizontal:increment {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M7 4 L1 1 L1 7 Z' fill='%23f2f2f5'/%3E%3C/svg%3E");
+}
+/* Title-bar stripes read lighter on graphite. */
+body[data-dsh-retro-mac][data-ds-dark-theme] header {
+  background-image: repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0px, rgba(255, 255, 255, 0.06) 1px, transparent 1px, transparent 3px);
+}

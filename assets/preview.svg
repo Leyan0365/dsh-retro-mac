@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="360" viewBox="0 0 720 360">
+  <defs>
+    <pattern id="pinstripe" width="6" height="6" patternUnits="userSpaceOnUse">
+      <rect width="3" height="6" fill="#9FB4D8"/>
+      <rect x="3" width="3" height="6" fill="#B7C8E6"/>
+    </pattern>
+    <linearGradient id="titlebar" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#EEEEEE"/>
+      <stop offset="1" stop-color="#D6D6D6"/>
+    </linearGradient>
+    <filter id="hardshadow" x="-10%" y="-10%" width="130%" height="130%">
+      <feDropShadow dx="3" dy="3" flood-color="#000000" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <!-- desktop -->
+  <rect width="720" height="360" fill="url(#pinstripe)"/>
+
+  <!-- main window -->
+  <g filter="url(#hardshadow)">
+    <rect x="90" y="30" width="540" height="300" fill="#D6D6D6" stroke="#000000" stroke-width="1.5"/>
+    <!-- title bar -->
+    <rect x="90" y="30" width="540" height="24" fill="url(#titlebar)" stroke="#000000" stroke-width="1.5"/>
+    <rect x="99" y="38" width="10" height="10" fill="#FFFFFF" stroke="#000000" stroke-width="1"/>
+    <rect x="613" y="36" width="12" height="12" fill="#FFFFFF" stroke="#000000" stroke-width="1"/>
+    <line x1="615" y1="44" x2="623" y2="44" stroke="#000000" stroke-width="1.5"/>
+    <!-- title text -->
+    <text x="135" y="47" font-family="Geneva, Arial, sans-serif" font-size="14" fill="#000000">dsh-retro-mac</text>
+  </g>
+
+  <!-- sidebar window -->
+  <g filter="url(#hardshadow)">
+    <rect x="20" y="120" width="160" height="220" fill="#C8C8C8" stroke="#000000" stroke-width="1.5"/>
+    <rect x="20" y="120" width="160" height="22" fill="url(#titlebar)" stroke="#000000" stroke-width="1.5"/>
+    <text x="30" y="135" font-family="Geneva, Arial, sans-serif" font-size="13" fill="#000000">Settings</text>
+  </g>
+
+  <!-- buttons -->
+  <g font-family="Geneva, Arial, sans-serif" font-size="13" fill="#000000">
+    <rect x="120" y="70" width="130" height="26" fill="#E8E8E8" stroke="#000000" stroke-width="1"/>
+    <rect x="121" y="71" width="128" height="1" fill="#FFFFFF"/>
+    <rect x="121" y="71" width="1" height="24" fill="#FFFFFF"/>
+    <rect x="248" y="95" width="128" height="1" fill="#808080"/>
+    <rect x="248" y="71" width="1" height="25" fill="#808080"/>
+    <text x="138" y="87">Platinum</text>
+  </g>
+
+  <!-- list rows -->
+  <g font-family="Geneva, Arial, sans-serif" font-size="13" fill="#000000">
+    <rect x="120" y="110" width="360" height="22" fill="#1E56C6"/>
+    <text x="130" y="125" fill="#FFFFFF">Accent — Classic Blue</text>
+    <text x="130" y="160">Skin — Platinum</text>
+    <text x="130" y="185">Splash — Off</text>
+    <text x="130" y="210">Status — Ready</text>
+  </g>
+
+  <!-- footer -->
+  <text x="120" y="320" font-family="Geneva, Arial, sans-serif" font-size="11" fill="#000000">Preview placeholder — replace with a real screenshot.</text>
+</svg>
