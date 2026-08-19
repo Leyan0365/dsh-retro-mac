@@ -1,12 +1,12 @@
 <h3 align="center">
-	<img src="https://raw.githubusercontent.com/zhijun-dai/dsh-retro-mac/main/assets/preview.svg" width="720" alt="预览"/><br/>
+	<img src="https://raw.githubusercontent.com/Leyan0365/dsh-retro-mac/main/assets/preview.svg" width="720" alt="预览"/><br/>
 	复古麦金塔 · <a href="https://github.com/deepseek-ai/deepseek-harness">DeepSeek Harness</a> 皮肤
 </h3>
 
 <p align="center">
-	<a href="https://github.com/zhijun-dai/dsh-retro-mac/stargazers"><img src="https://img.shields.io/github/stars/zhijun-dai/dsh-retro-mac?style=for-the-badge&colorA=363a4f&colorB=b7bdf8"></a>
-	<a href="https://github.com/zhijun-dai/dsh-retro-mac/issues"><img src="https://img.shields.io/github/issues/zhijun-dai/dsh-retro-mac?style=for-the-badge&colorA=363a4f&colorB=f5a97f"></a>
-	<a href="https://github.com/zhijun-dai/dsh-retro-mac/blob/main/LICENSE"><img src="https://img.shields.io/github/license/zhijun-dai/dsh-retro-mac?style=for-the-badge&colorA=363a4f&colorB=a6da95"></a>
+	<a href="https://github.com/Leyan0365/dsh-retro-mac/stargazers"><img src="https://img.shields.io/github/stars/Leyan0365/dsh-retro-mac?style=for-the-badge&colorA=363a4f&colorB=b7bdf8"></a>
+	<a href="https://github.com/Leyan0365/dsh-retro-mac/issues"><img src="https://img.shields.io/github/issues/Leyan0365/dsh-retro-mac?style=for-the-badge&colorA=363a4f&colorB=f5a97f"></a>
+	<a href="https://github.com/Leyan0365/dsh-retro-mac/blob/main/LICENSE"><img src="https://img.shields.io/github/license/Leyan0365/dsh-retro-mac?style=for-the-badge&colorA=363a4f&colorB=a6da95"></a>
 </p>
 
 <p align="center">
