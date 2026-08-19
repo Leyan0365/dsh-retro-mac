@@ -35,11 +35,11 @@
 
 ## 安装
 
-这是一个文件式 bundle 插件——像其他 DSH 插件包一样作为 profile 依赖添加：
+这是一个文件式 bundle 插件——像其他 DSH 插件包一样作为 profile 依赖添加。在包发布到 npm 之前，直接从本仓库安装：
 
 ```bash
 # 在启动 dsh 的 npm exec 包装目录下执行
-dsh plugin --profile web add dsh-retro-mac
+dsh plugin --profile web add github:Leyan0365/dsh-retro-mac
 ```
 
 或在 profile 的 `package.json` 中手动添加：
@@ -47,10 +47,12 @@ dsh plugin --profile web add dsh-retro-mac
 ```json
 {
   "dependencies": {
-    "dsh-retro-mac": "^0.1.0"
+    "dsh-retro-mac": "github:Leyan0365/dsh-retro-mac"
   }
 }
 ```
+
+发布到 npm 后，`dsh plugin --profile web add dsh-retro-mac`（或 `"dsh-retro-mac": "^0.1.0"`）同样可用。
 
 然后重启 web profile 并刷新页面。设置里会出现 **复古麦金塔** 设置行（Settings → Models 或主题选择器），包含：
 

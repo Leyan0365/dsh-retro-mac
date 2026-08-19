@@ -35,11 +35,11 @@ A classic **Mac OS 8/9 Platinum** skin for the DeepSeek Harness Web GUI — a tr
 
 ## Installation
 
-The plugin is a file-based bundle plugin — add it as a profile dependency, exactly like any other DSH plugin package:
+The plugin is a file-based bundle plugin — add it as a profile dependency. Until the package is published to npm, install it straight from this repository:
 
 ```bash
 # from your harness checkout (the npm exec wrapper that boots `dsh`)
-dsh plugin --profile web add dsh-retro-mac
+dsh plugin --profile web add github:Leyan0365/dsh-retro-mac
 ```
 
 Or add the package by hand in the profile's `package.json`:
@@ -47,10 +47,12 @@ Or add the package by hand in the profile's `package.json`:
 ```json
 {
   "dependencies": {
-    "dsh-retro-mac": "^0.1.0"
+    "dsh-retro-mac": "github:Leyan0365/dsh-retro-mac"
   }
 }
 ```
+
+Once published to npm, `dsh plugin --profile web add dsh-retro-mac` (or `"dsh-retro-mac": "^0.1.0"`) also works.
 
 Then restart the web profile and refresh the page. A **Retro Mac** settings row appears (Settings → Models or the theme picker) with:
 
